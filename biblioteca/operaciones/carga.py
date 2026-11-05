@@ -1,48 +1,50 @@
 from ..utilidades import busqueda as busqueda
 
-inventario = [{"Herramienta": "Culo", "Cantidad": 23}] #sacar despues
-
-
-def carga_herramienta_existente(): #completar
-    
-    buscar_herramienta = busqueda.busqueda(inventario)
-    if not buscar_herramienta:
-        raise ValueError("La entrada no puede estar vacía")
-    elif buscar_herramienta == None:
-        print("La herramienta no existe, debe cargarla desde el menú principal ")
-    else:
-        print(f"\n El stock del producto {buscar_herramienta} es de {inventario[buscar_herramienta]} unidades.\n")
-        try:
-            cantidad = int(input(f"Ingrese la cantidad actual de {buscar_herramienta} que desea agregar al stock: "))
-            inventario.update()
-        except ValueError:
-            print("Debe ingresar una cantidad válida.")
-
-
-
-
-def alta_nuevo_producto(inventario): # opcion 5 CORREGIR
-    while True:
-        try:
-
-            nueva_herramienta = busqueda.busqueda(inventario)
-            if not nueva_herramienta:
-                raise ValueError("La entrada no puede estar vacía")
-           
-            if nueva_herramienta : 
-                try:
-                    cantidad = int(input(f"Ingrese la cantidad actual de {nueva_herramienta} disponibles: "))
+def carga_herramienta_existente(inventario): #opcion 1
+    try:
+        clave = input("Ingrese el elemento que desea actualizar: ").strip().capitalize()
+        if clave == "":
+            raise ValueError("La entrada no puede estar vacía")
+        elif clave not in [herramienta["herramienta"] for herramienta in inventario]:
+            raise ValueError("Debe ingresar una herramienta que esté en el inventario")    
+        else:
+            for i in range(len(inventario)) :
+                if inventario[i]["herramienta"] == clave: 
+                    cantidad = int(input(f"Ingrese la cantidad de elementos que desea agregar a {clave}: "))
                     if cantidad > 0:
-                        nuevo_ingreso = {"Herramienta": nueva_herramienta, "Cantidad": cantidad}
-                        inventario.append(nuevo_ingreso)
-                        break
+                        inventario[i]["cantidad"] += cantidad  
+                        print(f"El stock de {clave} ha sido actualizaco con éxito, quedan en total {inventario[i]["cantidad"]}")
+                    print("\n *************************************\n")
 
-                    
-                except ValueError:
-                    print("Debe ingresar la cantidad en números")
-        except Exception as e:
-            print(f"Ha ocurrido un error inesperado {e}")
+    except ValueError:
+        print("Debe ingresar una herramienta que esté en el inventario")
+    except Exception as e:
+        print(f"Ha ocurrido un error inesperado {e}")
 
-alta_nuevo_producto(inventario)
 
-print(inventario)
+
+
+
+
+
+def alta_nuevo_producto(inventario): # opcion 5 
+    try:
+        clave = input("Ingrese el elemento que desea actualizar: ").strip().capitalize()
+        if clave == "":
+            raise ValueError("La entrada no puede estar vacía")
+        elif clave in [herramienta["herramienta"] for herramienta in inventario]:
+            
+            raise ValueError("Debe ingresar una herramienta que NO esté en el inventario")    
+        else:
+            try:
+                cantidad = int(input(f"Ingrese la cantidad de elementos que desea agregar a {clave} "))
+                if cantidad > 0:
+                    inventario.add({"herramienta": clave, "cantidad": cantidad})  
+                    print("El registro ha sido ingresado con éxito")
+            except ValueError:
+                print(f"Debe ingresar la cantidad de {clave} en números enteros")
+
+    except ValueError:
+        print("Debe ingresar una herramienta en formato texto.")
+    except Exception as e:
+        print(f"Ha ocurrido un error inesperado {e}")
