@@ -1,7 +1,8 @@
-🎥 El enlace al video demostrativo del proyecto, asegurando que cuente con permisos públicos de visualización.
+🎥 El enlace al video demostrativo del proyecto:
+🪢 [ https://www.youtube.com/watch?v=UOtDZSZAIzY ]
 
 
-📚 El enlace a la documentación en PDF o, alternativamente, el archivo PDF subido directamente en la raíz del repositorio.
+📚 Documentación en PDF 
 
 Repositorio:
 

@@ -25,11 +25,11 @@ def main():
             if opcion == 4:
                 consulta.reporte_agotados(inventario) #ok
             if opcion == 5:
-                inventario.append(carga.alta_nuevo_producto(inventario))
+                carga.alta_nuevo_producto(inventario)
             if opcion == 6:
                 busqueda.actualizar_stock_con_clave(inventario) 
         except Exception as e:
-            print(f"Ha ocurrido un error inesperado: {e}")
+            print(f"Ocurrió un error {e} ")
         
 
         

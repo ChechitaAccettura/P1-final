@@ -61,8 +61,8 @@ def actualizar_stock_con_clave(inventario): #opcion 6 - lista
                                     inventario[i]["cantidad"] -= vender
                                     print(f"El stock de {clave} fue correctamente actualizado. Actualmente quedan {inventario[i]["cantidad"]} unidades")
 
-                            except ValueError:
-                                print("Debe ingresar un número entero para la cantidad a agregar")
+                            except ValueError as e:
+                                print(e)
                         else:
                             raise KeyError("Debe ingresar 1 o 2 para la opción de actualización de stock")
                     except Exception as e:
