@@ -1,3 +1,4 @@
+import time
 from biblioteca.interfaz import menu as menu
 from biblioteca.operaciones import carga as carga
 from biblioteca.operaciones import consulta as consulta
@@ -8,7 +9,7 @@ print("Bienvenido al sistema de Inventario")
 print("*************************************")
 
 def main(): 
-    inventario = [] #sacar CONTENIDO despues
+    inventario = [] 
     while True:
         try:
             opcion = menu.menu()
@@ -28,7 +29,7 @@ def main():
             if opcion == 6:
                 busqueda.actualizar_stock_con_clave(inventario) 
         except Exception as e:
-            print("Ha ocurrido un error inesperado: {e}")
+            print(f"Ha ocurrido un error inesperado: {e}")
         
 
         
@@ -36,3 +37,6 @@ def main():
 main()
 
 print("Ud ha salido del sistema de inventario")
+
+
+time.sleep(6)

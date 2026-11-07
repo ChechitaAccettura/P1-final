@@ -13,7 +13,7 @@ def visualizar_inventario(inventario): # opcion 2 - lista
 
         for i in range(len(inventario)) :
             print(f"Herramienta: {inventario[i]["herramienta"]}, Cantidad: {inventario[i]["cantidad"]}")
-        print("***************************")
+        print("*************************************")
 
 
 def reporte_agotados(inventario): # opcion 4  - lista

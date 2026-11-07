@@ -1,31 +1,62 @@
-from ..utilidades import busqueda as busqueda
+
 
 def carga_herramienta_existente(inventario): #opcion 1
-    while True:
         try:
             cantidad_cargas = input("Ingrese la cantidad de herramientas que va a cargar: ")
             if cantidad_cargas == "":
                 raise ValueError("\nLa entrada no puede estar vacía")
             else:
                 cantidad_cargas = int(cantidad_cargas)
-                for i in range(cantidad_cargas +1):
-
-                    clave = input(f"\nIngrese el elemento {i+1} que desea actualizar: ").strip().capitalize()
+                if cantidad_cargas <= 0:
+                    raise KeyError("El número de herramientas que desea cargar debe ser un número mayor que 0")
+                 
+                for i in range(cantidad_cargas):  
+                    clave = input(f"\nIngrese el producto {i+1}° que desea actualizar: ").strip().capitalize()
                     if clave == "":
-                        raise ValueError("\nLa entrada no puede estar vacía")
-                    elif clave not in [herramienta["herramienta"] for herramienta in inventario]:
-                        raise KeyError("\nDebe ingresar una herramienta que esté en el inventario")    
+                        print("\nEl nombre del producto no puede estar vacía")
                     else:
-                        for i in range(len(inventario)) :
-                            if inventario[i]["herramienta"] == clave: 
-                                cantidad = int(input(f"\nIngrese la cantidad de elementos que desea agregar a {clave}: "))
-                                if cantidad > 0:
-                                    inventario[i]["cantidad"] += cantidad  
-                                    print(f"\nEl stock de {clave} ha sido actualizaco con éxito, quedan en total {inventario[i]["cantidad"]}")
-                                print("\n *************************************\n")
+                        herramienta_encontrada = None
+                        for herramienta in inventario:
+                            if herramienta["herramienta"] == clave:
+                                herramienta_encontrada = herramienta
+                                break
 
-        except ValueError as e:
-            print(e)
+                        if herramienta_encontrada is not None:
+                            print(f"La herramienta {clave} ya se encuentra en el inventario. ")
+                            while True:
+                                try:
+                                    cantidad = int(input(f"\nIngrese el stock nuevo de {clave}: "))
+                                    if cantidad >= 0:
+                                        herramienta_encontrada["cantidad"] = cantidad  
+                                        print(f"\nEl stock de {clave} ha sido actualizado con éxito, quedan en total {herramienta_encontrada["cantidad"]}")
+                                        break
+                                        
+                                    else:
+                                        raise KeyError("El stock debe ser un número positivo")
+                                except ValueError:
+                                    print("El stock nuevo debe ser mayor o igual a 0")
+                                except KeyError as e:
+                                    print(e)
+                    
+                        else:
+                            print(f"La herramienta {clave} no se encuentra en el inventario. ")
+                            while True:
+                                try:
+                                    cantidad = int(input(f"\nIngrese el stock de {clave}: "))
+                                    if cantidad >= 0:
+                                        inventario.append({"herramienta": clave, "cantidad": cantidad}) 
+                                        print(f"\nEl producto {clave} ha sido agregado con éxito. Su stock actual es {cantidad}")
+                                        break
+                                    else:
+                                        raise KeyError("El stock debe ser un número positivo")
+                                except ValueError:
+                                    print("El stock nuevo debe ser mayor o igual a 0")
+                                except KeyError as e:
+                                    print(e)
+                                        
+                print("\nCarga de herramientas finalizada.")
+        except ValueError:
+            print("Debe ingresar la cantidad de cargas en números enteros.")
         except KeyError as e:
             print(e)
         except Exception as e:
@@ -37,30 +68,24 @@ def carga_herramienta_existente(inventario): #opcion 1
 
 
 
-def alta_nuevo_producto(inventario): # opcion 5 - lista
+def alta_nuevo_producto(inventario): # opcion 5 
     try:
-        clave = input("\nIngrese el elemento que desea agregar al inventario: ").strip().capitalize()
+        clave = input("Ingrese el elemento que desea agregar al inventario: ").strip().capitalize()
         if clave == "":
-            raise ValueError("\nLa entrada no puede estar vacía")
+            raise ValueError("El nombre del producto no puede estar vací0.")
         elif clave in [herramienta["herramienta"] for herramienta in inventario] or clave.isdigit():
             
-            raise KeyError("\nDebe ingresar una herramienta NUEVA")    
+            raise ValueError("Debe ingresar una herramienta NUEVA en formato texto.")   
         else:
             try:
-                cantidad = int(input(f"\nIngrese la cantidad de elementos que desea agregar a {clave}: "))
+                cantidad = int(input(f"Ingrese la cantidad de elementos que desea agregar a {clave}: "))
                 if cantidad >= 0:
-                    nuevo_producto = ({"herramienta": clave, "cantidad": cantidad})  
-                    print("\nEl registro ha sido ingresado con éxito")
-                    return nuevo_producto
-                    
-                else:
-                    raise ValueError("La cantidad debe ser mayor o igual a 0")
+                    inventario.append({"herramienta": clave, "cantidad": cantidad})  
+                    print("El registro ha sido ingresado con éxito")
             except ValueError:
-                print(f"\nDebe ingresar la cantidad de {clave} en números enteros")
+                print(f"Debe ingresar la cantidad de {clave}(s) en números enteros")
 
     except ValueError as e:
         print(e)
-    except KeyError as e:
-        print(e)
     except Exception as e:
-        print(f"\nHa ocurrido un error inesperado {e}")
+        print(f"Ha ocurrido un error inesperado {e}")
