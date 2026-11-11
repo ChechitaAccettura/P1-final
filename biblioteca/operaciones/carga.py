@@ -79,19 +79,25 @@ def alta_nuevo_producto(inventario): # opcion 5
         clave = input("Ingrese el elemento que desea agregar al inventario: ").strip().capitalize()
         if clave == "":
             raise ValueError("El nombre del producto no puede estar vacío.")
-        elif clave in [herramienta["herramienta"] for herramienta in inventario] or clave.isdigit():
-            
-            raise ValueError("Debe ingresar una herramienta NUEVA en formato texto.")   
         else:
-            try:
-                cantidad = int(input(f"Ingrese la cantidad de elementos que desea agregar a {clave}: "))
-                if cantidad >= 0:
-                    inventario.append({"herramienta": clave, "cantidad": cantidad})  
-                    print("El registro ha sido ingresado con éxito")
-            except ValueError:
-                print(f"Debe ingresar la cantidad de {clave}(s) en números enteros")
-
+            herramienta_encontrada = None
+            for herramienta in inventario:
+                if herramienta["herramienta"] == clave:
+                    herramienta_encontrada = herramienta
+                                                    
+            if herramienta_encontrada == None:            
+                try:
+                    cantidad = int(input(f"Ingrese la cantidad de elementos que desea agregar a {clave}: "))
+                    if cantidad >= 0:
+                        inventario.append({"herramienta": clave, "cantidad": cantidad})  
+                        print("El registro ha sido ingresado con éxito")
+                except ValueError:
+                    print(f"Debe ingresar la cantidad de {clave}(s) en números enteros")
+            else:
+                raise KeyError(f"La herramienta ingresada {clave} ya existe en el inventario.")
     except ValueError as e:
+        print(e)
+    except KeyError as e:
         print(e)
     except Exception as e:
         print(f"Ha ocurrido un error inesperado {e}")
